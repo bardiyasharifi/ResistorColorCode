@@ -306,7 +306,7 @@ class MainWindow(QMainWindow):
             self.sixth_band.setVisible(True)
             self.sixth_band_str.setVisible(True)
 
-            # Drawing all bands and no bands to hide
+            # Drawing all bands
             self.painter.fillRect(self.first_band_rect, QColor(DEFAULT_BAND_COLOR))
             self.painter.fillRect(self.second_band_rect, QColor(DEFAULT_BAND_COLOR))
             self.painter.fillRect(self.third_band_rect, QColor(DEFAULT_BAND_COLOR))
@@ -398,20 +398,16 @@ class MainWindow(QMainWindow):
     def change_third_band_color(self, color=DEFAULT_BAND_COLOR):
         if self.band == "4 Bands":
             self.painter.fillRect(self.forth_band_rect, QColor(color))
-            self.resistor_pixmap.setPixmap(self.canvas)
-
         else:
             self.painter.fillRect(self.third_band_rect, QColor(color))
-            self.resistor_pixmap.setPixmap(self.canvas)
+        self.resistor_pixmap.setPixmap(self.canvas)
 
     def change_forth_band_color(self, color=DEFAULT_BAND_COLOR):
         if self.band == "4 Bands":
             self.painter.fillRect(self.fifth_band_rect, QColor(color))
-            self.resistor_pixmap.setPixmap(self.canvas)
-
         else:
             self.painter.fillRect(self.forth_band_rect, QColor(color))
-            self.resistor_pixmap.setPixmap(self.canvas)
+        self.resistor_pixmap.setPixmap(self.canvas)
 
     def change_fifth_band_color(self, color=DEFAULT_BAND_COLOR):
         self.painter.fillRect(self.fifth_band_rect, QColor(color))
