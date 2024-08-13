@@ -1,4 +1,4 @@
-<img align=right src="icon.png" width=70px>
+<img align=right src="icon.ico" width=70px>
 
 # Resistor Color Code Convertor (Or *RCCC* for short)
 
