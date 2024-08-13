@@ -21,7 +21,7 @@ TERMINAL_COLOR = "#555d6a"
 DEFAULT_BAND_COLOR = "#aeb8b1"
 
 
-class MainWindow(QMainWindow):
+class RCCC(QMainWindow):
 
     def __init__(self):
         super().__init__()
@@ -29,7 +29,7 @@ class MainWindow(QMainWindow):
         self.band = None
 
         #  Window Properties
-        self.setWindowTitle("Resistor Calculator")
+        self.setWindowTitle("Resistor Color Code Convertor")
         self.setWindowIcon(QIcon(r"icon.ico"))
         self.setGeometry(350, 180, 800, 500)
         self.setFixedSize(800, 500)
@@ -88,7 +88,7 @@ class MainWindow(QMainWindow):
         self.line2.setGeometry(30, 170, 220, 20)
         self.line2.setFrameShape(QFrame.Shape.HLine)
 
-        # Number of Bands QCombobox`
+        # Number of Bands QComboBox
         self.number_of_bands_str = QLabel("Select number of bands :", self)
         self.number_of_bands_str.setGeometry(32, 185, 150, 20)
         self.number_of_bands = QComboBox(self)
@@ -519,6 +519,6 @@ class MainWindow(QMainWindow):
 
 app = QApplication(sys.argv)
 app.setWindowIcon(QIcon(r"icon.ico"))
-window = MainWindow()
+window = RCCC()
 window.show()
 app.exec()
