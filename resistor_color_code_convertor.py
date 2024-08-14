@@ -113,10 +113,9 @@ class RCCC(QMainWindow):
         self.sixth_band_rect = QRect(313, 130, 13, 70)
 
         # First band ComboBox
-        self.first_band_str = QLabel("Color of 1st band  :", self)
+        self.first_band_str = QLabel("1st Digit :", self)
         self.first_band_str.setGeometry(30, 250, 105, 25)
         self.first_band = QComboBox(self)
-        self.first_band.setObjectName("first_band")
         self.first_band.setGeometry(28, 275, 105, 25)
         self.first_band.setCurrentIndex(-1)
         self.first_band.setPlaceholderText("Select Color")
@@ -124,7 +123,7 @@ class RCCC(QMainWindow):
         self.first_band.currentTextChanged.connect(self.calculate_resistance)
 
         # second band ComboBox
-        self.second_band_str = QLabel("Color of 2nd band :", self)
+        self.second_band_str = QLabel("2nd Digit :", self)
         self.second_band_str.setGeometry(150, 250, 105, 25)
         self.second_band = QComboBox(self)
         self.second_band.setGeometry(148, 275, 105, 25)
@@ -134,7 +133,7 @@ class RCCC(QMainWindow):
         self.second_band.currentTextChanged.connect(self.calculate_resistance)
 
         # Third band ComboBox
-        self.third_band_str = QLabel("Color of 3rd band :", self)
+        self.third_band_str = QLabel("3rd Digit :", self)
         self.third_band_str.setGeometry(30, 300, 105, 25)
         self.third_band = QComboBox(self)
         self.third_band.setGeometry(28, 325, 105, 25)
@@ -144,7 +143,7 @@ class RCCC(QMainWindow):
         self.third_band.currentTextChanged.connect(self.calculate_resistance)
 
         # Forth band ComboBox
-        self.forth_band_str = QLabel("Color of 4th band :", self)
+        self.forth_band_str = QLabel("Multiplier :", self)
         self.forth_band_str.setGeometry(150, 300, 105, 25)
         self.forth_band = QComboBox(self)
         self.forth_band.setGeometry(148, 325, 105, 25)
@@ -154,7 +153,7 @@ class RCCC(QMainWindow):
         self.forth_band.currentTextChanged.connect(self.calculate_resistance)
 
         # Fifth Band ComboBox
-        self.fifth_band_str = QLabel("Color of 5th band :", self)
+        self.fifth_band_str = QLabel("Tolerance :", self)
         self.fifth_band_str.setGeometry(30, 350, 105, 25)
         self.fifth_band = QComboBox(self)
         self.fifth_band.setGeometry(28, 375, 105, 25)
@@ -166,7 +165,7 @@ class RCCC(QMainWindow):
         self.fifth_band.currentTextChanged.connect(self.calculate_resistance)
 
         # Sixth band ComboBox
-        self.sixth_band_str = QLabel("Color of 6th band :", self)
+        self.sixth_band_str = QLabel("Tempco :", self)
         self.sixth_band_str.setGeometry(150, 350, 105, 25)
         self.sixth_band = QComboBox(self)
         self.sixth_band.setGeometry(148, 375, 105, 25)
@@ -176,6 +175,11 @@ class RCCC(QMainWindow):
         self.sixth_band.setPlaceholderText("Select Color")
         self.sixth_band.currentTextChanged.connect(self.change_sixth_band_color)
         self.sixth_band.currentTextChanged.connect(self.calculate_resistance)
+
+        self.reset_button = QPushButton("Reset", self)
+        self.reset_button.setGeometry(95, 415, 120, 25)
+        self.reset_button.clicked.connect(self.reset_index)
+        self.reset_button.clicked.connect(self.selected_band)
 
         self.copy_value_button = QPushButton("Copy value to clipboard", self)
         self.copy_value_button.setGeometry(298, 355, 150, 45)
@@ -218,8 +222,8 @@ class RCCC(QMainWindow):
         self.painter.fillRect(0, 250, 450, 60, QColor("white"))
         self.resistor_pixmap.setPixmap(self.canvas)
 
-    def selected_band(self, band):
-        self.band = band
+    def selected_band(self):
+        self.band = self.number_of_bands.currentText()
         if self.band == "4 Bands":
             self.first_band.clear()
             self.first_band.addItems(colors_without_black)
@@ -229,9 +233,11 @@ class RCCC(QMainWindow):
 
             self.third_band.clear()
             self.third_band.addItems(multipliers)
+            self.third_band_str.setText("Multiplier :")
 
             self.forth_band.clear()
             self.forth_band.addItems(tolerances)
+            self.forth_band_str.setText("Tolerance :")
 
             self.fifth_band.setVisible(False)
             self.fifth_band_str.setVisible(False)
@@ -259,12 +265,15 @@ class RCCC(QMainWindow):
 
             self.third_band.clear()
             self.third_band.addItems(colors)
+            self.third_band_str.setText("3rd Digit :")
 
             self.forth_band.clear()
             self.forth_band.addItems(multipliers)
+            self.forth_band_str.setText("Multiplier :")
 
             self.fifth_band.clear()
             self.fifth_band.addItems(tolerances)
+            self.fifth_band_str.setText("Tolerance :")
 
             self.fifth_band.setVisible(True)
             self.fifth_band_str.setVisible(True)
@@ -291,15 +300,19 @@ class RCCC(QMainWindow):
 
             self.third_band.clear()
             self.third_band.addItems(colors)
+            self.third_band_str.setText("3rd Digit :")
 
             self.forth_band.clear()
             self.forth_band.addItems(multipliers)
+            self.forth_band_str.setText("Multiplier :")
 
             self.fifth_band.clear()
             self.fifth_band.addItems(tolerances)
+            self.fifth_band_str.setText("Tolerance :")
 
             self.sixth_band.clear()
             self.sixth_band.addItems(tempco)
+            self.sixth_band_str.setText("Tempco :")
 
             self.fifth_band.setVisible(True)
             self.fifth_band_str.setVisible(True)
@@ -339,6 +352,7 @@ class RCCC(QMainWindow):
         self.fifth_band.setVisible(True)
         self.sixth_band_str.setVisible(True)
         self.sixth_band.setVisible(True)
+        self.reset_button.setVisible(True)
 
     def state_two(self):  # For Ohm to color code conversion
         self.label.setText("Enter resistance value (in Ohms): ")
@@ -362,6 +376,7 @@ class RCCC(QMainWindow):
         self.fifth_band.setVisible(False)
         self.sixth_band_str.setVisible(False)
         self.sixth_band.setVisible(False)
+        self.reset_button.setVisible(False)
 
     def reset_index(self):
         # Reset QComboBoxes and result when number of bands has changed
